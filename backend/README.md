@@ -66,4 +66,4 @@ chronogrid/
         └── api.js
 
 ## URL publique
-https://chronogrid.onrender.com
+https://chronogrid-frontend.onrender.com *(déployé sur Render)*
