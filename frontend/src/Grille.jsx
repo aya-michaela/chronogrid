@@ -14,19 +14,15 @@ export default function Grille({ user, chaine, onRetour }) {
   const [notifications, setNotifications] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [editData, setEditData] = useState({});
-  const [historique, setHistorique] = useState([]);
-  const [showHistorique, setShowHistorique] = useState(null);
   const wsRef = useRef(null);
 
-  // Charger les créneaux
   useEffect(() => {
     getCreneaux(chaine.id).then((res) => setCreneaux(res.data));
   }, [chaine.id]);
 
-  // Connexion WebSocket
   useEffect(() => {
     const ws = new WebSocket(
-      `ws://127.0.0.1:8000/ws/${chaine.id}/${user.prenom}`
+      `wss://chronogrid-backend-rpow.onrender.com/ws/${chaine.id}/${user.prenom}`
     );
     wsRef.current = ws;
 
@@ -89,7 +85,6 @@ export default function Grille({ user, chaine, onRetour }) {
 
   return (
     <div style={styles.container}>
-      {/* Header */}
       <div style={styles.header}>
         <div style={styles.headerLeft}>
           <button onClick={onRetour} style={styles.retourBtn}>← Retour</button>
@@ -106,14 +101,12 @@ export default function Grille({ user, chaine, onRetour }) {
         </div>
       </div>
 
-      {/* Notifications toast */}
       <div style={styles.toastContainer}>
         {notifications.map((n) => (
           <div key={n.id} style={styles.toast}>{n.message}</div>
         ))}
       </div>
 
-      {/* Tableau grille */}
       <div style={styles.tableContainer}>
         <table style={styles.table}>
           <thead>
@@ -203,7 +196,6 @@ export default function Grille({ user, chaine, onRetour }) {
         </table>
       </div>
 
-      {/* Footer */}
       <div style={styles.footer}>
         <span style={styles.footerText}>
           {creneaux.length} créneaux • Modifications en temps réel via WebSocket
