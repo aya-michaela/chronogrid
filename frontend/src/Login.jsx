@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { login } from "./api";
+import { login, setToken } from "./api";
 
 export default function Login({ onLogin }) {
   const [email, setEmail] = useState("");
@@ -13,7 +13,8 @@ export default function Login({ onLogin }) {
     setErreur("");
     try {
       const res = await login(email, password);
-      onLogin(res.data);
+      setToken(res.data.access_token);
+      onLogin(res.data.user);
     } catch (err) {
       setErreur("Email ou mot de passe incorrect");
     } finally {

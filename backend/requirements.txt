@@ -1,7 +1,9 @@
-fastapi==0.141.1
-uvicorn==0.52.4
-sqlalchemy==2.0.52
-psycopg2-binary==2.9.12
-python-jose[cryptography]==3.5.0
-passlib[bcrypt]==1.7.4
-python-multipart==0.0.32
+fastapi
+uvicorn
+sqlalchemy
+psycopg2-binary
+python-jose[cryptography]
+bcrypt
+python-multipart
+pytest
+httpx

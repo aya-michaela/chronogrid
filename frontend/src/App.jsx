@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { setToken } from "./api";
 import Login from "./Login";
 import Dashboard from "./Dashboard";
 import Grille from "./Grille";
@@ -12,6 +13,7 @@ export default function App() {
   };
 
   const handleLogout = () => {
+    setToken(null);
     setUser(null);
     setChaineSelectionnee(null);
   };

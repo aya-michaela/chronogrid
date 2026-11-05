@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { getCreneaux, modifierCreneau } from "./api";
+import { getCreneaux, modifierCreneau, getToken, BASE_URL } from "./api";
 
 const TYPE_COLORS = {
   PROG: "#1a3a5c",
@@ -22,7 +22,7 @@ export default function Grille({ user, chaine, onRetour }) {
 
   useEffect(() => {
     const ws = new WebSocket(
-      `wss://chronogrid-backend-rpow.onrender.com/ws/${chaine.id}/${user.prenom}`
+      `${BASE_URL.replace('https', 'wss')}/ws/${chaine.id}?token=${getToken()}`
     );
     wsRef.current = ws;
 
@@ -71,7 +71,6 @@ export default function Grille({ user, chaine, onRetour }) {
     try {
       const res = await modifierCreneau(creneauId, {
         ...editData,
-        modifie_par: user.prenom,
       });
       setCreneaux((prev) =>
         prev.map((c) => (c.id === creneauId ? res.data : c))

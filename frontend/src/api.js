@@ -1,7 +1,17 @@
 import axios from 'axios';
 
-const API = axios.create({
-  baseURL: 'https://chronogrid-backend-rpow.onrender.com',
+export const BASE_URL = 'https://chronogrid-backend-rpow.onrender.com';
+
+const API = axios.create({ baseURL: BASE_URL });
+
+// Jeton JWT gardé en mémoire (pas de localStorage : limite l'exposition en cas de XSS)
+let token = null;
+export const setToken = (t) => { token = t; };
+export const getToken = () => token;
+
+API.interceptors.request.use((config) => {
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+  return config;
 });
 
 // Auth
